@@ -1,28 +1,28 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-from blog.models import Publicacion
+from blog.models import Post
 
 class PublicacionModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        autor = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-        Publicacion.objects.create(autor = autor, titulo = 'Titulo publicacion',
-                                   texto = 'Texto de prueba de la publicación')
+        author = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        Post.objects.create(author = author, title = 'Titulo publicacion',
+                                   text = 'Texto de prueba de la publicación')
         pass
 
 
     def test_titulo_label(self):
-        publicacion=Publicacion.objects.get(id=1)
-        field_label = publicacion._meta.get_field('texto').verbose_name
-        self.assertEquals(field_label,'texto')
+        publicacion=Post.objects.get(id=1)
+        field_label = publicacion._meta.get_field('text').verbose_name
+        self.assertEquals(field_label,'text')
 
     def test_titulo_max_length(self):
-        publicacion=Publicacion.objects.get(id=1)
-        max_length = Publicacion._meta.get_field('titulo').max_length
+        publicacion=Post.objects.get(id=1)
+        max_length = Post._meta.get_field('title').max_length
         self.assertEquals(max_length,200)
 
     def test_fecha_creacion_label (self):
-        publicacion = Publicacion.objects.get(id=1)
-        field_label = publicacion._meta.get_field('fecha_creacion').verbose_name
+        publicacion = Post.objects.get(id=1)
+        field_label = publicacion._meta.get_field('created_date').verbose_name
         self.assertEquals(field_label,'Creado')
